@@ -1,0 +1,124 @@
+import pandas as pd
+user_cols = ['carat','cut','x','y','z']
+diamonds = pd.read_csv("C:/Users/CSE WPT/Downloads/archive(8)/diamonds.csv")
+print("First 6 rows:")
+print(diamonds[user_cols].head(6))
+
+print(diamonds['carat'])
+
+diamonds['Quality-color']=diamonds.cut+','+diamonds.color
+print(diamonds.head())
+
+diamonds.head()
+
+print("Original dataframe:")
+print(diamonds.head())
+print("\n After renaming two of the columns:")
+diamonds.rename(columns={'color':'diamond_color','clarity':'diamond_clarity'},inplace=True)
+print(diamonds.head())
+
+diamonds = pd.read_csv("C:/Users/CSE WPT/Downloads/archive(8)/diamonds.csv")
+print("Original dataframe: ")
+print(diamonds.head())
+print("\n After removing the second column:")
+diamonds.drop('cut',axis=1,inplace=True)
+print(diamonds.head())
+
+diamonds = pd.read_csv("C:/Users/CSE WPT/Downloads/archive(8)/diamonds.csv")
+print("Original dataframe: ")
+print(diamonds.head())
+print("\n After removing multiple columns:")
+diamonds.drop(['carat','color','y'],axis=1,inplace=True)
+print(diamonds.head())
+
+diamonds = pd.read_csv("C:/Users/CSE WPT/Downloads/archive(8)/diamonds.csv")
+print("Original dataframe: ")
+print(diamonds.head())
+print("\n After removing multiple rows:")
+diamonds.drop([2,4,5],axis=0,inplace=True)
+print(diamonds.head())
+
+print("\n Price series in descending order:")
+result=diamonds.price.sort_values(ascending=False)
+print(result)
+
+print("Sorting the entire diamonds dataframe by the 'carat' series in ascending order")
+result=diamonds.sort_values('carat')
+print(result)
+print("Sorting the entire diamonds dataframe by the 'carat' series in ascending order")
+result=diamonds.sort_values('carat',ascending=False)
+print(result)
+
+print("Rows to only show carat weight at least 0.3:")
+booleans=[]
+for w in diamonds.carat:
+    if w>= 0.3:
+        booleans.append(True)
+    else:
+        booleans.append(False)
+print(booleans[0:20])
+
+print("\n Diamonds that are with a Fair or Good or Premium:")
+result=diamonds[diamonds.cut.isin(["Fair","Good","Premium"])]
+print(result.head())
+
+print("Details of the diamonds where length>5, widh>5 and depth>5:")
+result=diamonds[(diamonds.x>5)&(diamonds.y>5)&(diamonds.z>5)]
+print(result.head())
+
+print("\n Subset of 3 rows:")
+result=pd.read_csv("C:/Users/CSE WPT/Downloads/archive(8)/diamonds.csv",nrows=3)
+print(result.head())
+
+print("Iterating through diamonds dataframe:")
+for index,row in diamonds.iterrows():
+    print(index,row.carat,row.cut,row.color,row.price)
+
+print("Mean of each numeric column of diamonds DataFrame:")
+print(diamonds.mean())
+
+print("Mean of each numeric rows of diamonds DataFrame:")
+print(diamonds.mean(axis=1).head())
+
+print("Calculate the mean of price for each cut:")
+print(diamonds.groupby('cut').price.mean())
+
+print("\n Count, minimum, maximum price for each cut of diamonds DataFrame:")
+print(diamonds.groupby('cut').price.agg(['count','min','max']))
+
+print("Number of missing values in each Series of diamonds DataFrame: ")
+print(diamonds.isnull().sum())
+
+print("\n Accessing the series index:")
+print(diamonds.carat.value_counts().index)
+print("\n Accessing the series values:")
+print(diamonds.carat.value_counts().values)
+
+print("\n Rows 0 through 2(inclusive),columns 'color' through 'price' (inclusive)")
+print(diamonds.loc[0:2,['color','price']])
+
+print("\n Rows in which the 'cut' is 'Premium':")
+print(diamonds.loc[diamonds.cut=='Premiun','color'])
+
+print("Number of rows and columns:")
+print(diamonds.shape)
+print("\n Count the duplcate items:")
+print(diamonds.clarity.duplicated().sum())
+
+diamonds = pd.read_csv("C:/Users/CSE WPT/Downloads/archive(8)/diamonds.csv")
+print("\n Duplicate rows of diamond dataset:")
+print(diamonds.duplicated().sum())
+
+print("Number of rows and columns:")
+print(diamonds.shape)
+print("After droping those rows which are having missing values: ")
+print(diamonds.dropna(how='any').shape)
+
+print("\n Various summary statistics of cut series of diamonds DataFrame:")
+print(diamonds.carat.describe())
+
+print("Original dataset:")
+print(diamonds.head())
+print("Concatenate the diamonds DataFrame with the 'color' Series:")
+print(pd.concat([diamonds,diamonds.color],axis=1).head())
+
